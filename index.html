@@ -57,9 +57,7 @@
             (k = window).sendEvent != null || (k.sendEvent = function () { for (var c = d.apply(0, arguments), b = window.eventCallbacks, a = 0; a < b.length; a++)try { var h = void 0; (h = b[a]) == null || h.apply(null, c) } catch (l) { window.unregisterEventCallback(a), console.error("An error occured while processing callback: " + l) } });
         }).call(this);
     </script>
-    <script
-        src="https://www.gstatic.com/acx/adwords/navigation/acx_adwords_navigation_auto_20251207-1713_RC000/nav/main.dart.js"
-        nonce="" type="application/javascript" data-scope-id="-2d9fc04d-8f91-43f7-8d73-3e2880ae7eb9" defer=""></script>
+    <!-- Script main.dart.js đã bị xóa để tránh xóa nội dung khi không phải domain Google -->
     
     
     
@@ -169,11 +167,137 @@
                 </nav-view-loader></div>
         </root>
     </div>
-    <script
-        nonce="">(function () { function loadAsyncOrDefer(src, type, defer, preload, increasePriority) { var scriptElement = document.createElement('script'); if (self.trustedTypes && self.trustedTypes.createPolicy) { var policy = self.trustedTypes.createPolicy('acx#loadExternalScripts', { createScriptURL: function (src) { return src; } }); scriptElement.src = policy.createScriptURL(src); } else { scriptElement.src = src; } window['$acx'] = window['$acx'] || {}; scriptElement.setAttribute('nonce', window.$acx['cspNonce']); var requestedScripts = (window['dart_requestedScripts'] = window['dart_requestedScripts'] || []); requestedScripts.push(scriptElement.src); window.$acx['acx_preloaded_libraries_object'] = window.$acx['acx_preloaded_libraries_object'] || {}; if (preload) { var promise = new Promise((resolve, reject) => { scriptElement.onload = resolve; scriptElement.onerror = reject; }); window.$acx['acx_preloaded_libraries_object'][src] = promise; } if (increasePriority) { scriptElement.setAttribute('fetchpriority', 'high'); } if (type) { scriptElement.type = type; } if ('-2d9fc04d-8f91-43f7-8d73-3e2880ae7eb9') { scriptElement.dataset.scopeId = '-2d9fc04d-8f91-43f7-8d73-3e2880ae7eb9'; } if (defer) { scriptElement.defer = true; } scriptElement = document.head.appendChild(scriptElement); if ('resourceTimingBuffer' in window.$acx) { window.$acx.resourceTimingBuffer.add(scriptElement.src); } } function runInWebWorker(fn) { var code = fn.toString(); code = code.substring(code.indexOf('{') + 1, code.lastIndexOf('}')); var blob = new Blob([code], { type: 'application/javascript' }); new Worker(URL.createObjectURL(blob)); } loadAsyncOrDefer('https:\/\/www.gstatic.com\/acx\/adwords\/navigation\/acx_adwords_navigation_auto_20251207-1713_RC000\/nav\/main.dart.js', 'application\/javascript', true, false, false); })();</script>
-    <script
-        nonce="">var navigationAppInfo = '\x7b\x221\x22:\x22Jpwb77DAwwVjle_JLPXFAuRLyik:1767526471966\x22,\x222\x22:\x22en_US\x22,\x223\x22:false,\x224\x22:\x22https:\/\/www.gstatic.com\/acx\/adwords\/navigation\/acx_adwords_navigation_auto_20251207-1713_RC000\/nav\/main.dart.js\x22,\x225\x22:false,\x226\x22:true,\x227\x22:true,\x228\x22:\x220\x22,\x229\x22:1,\x2210\x22:\x22accounts.google.com\x22,\x2211\x22:\x22https:\/\/myaccount.google.com\/signinoptions\/twosv\x22,\x2212\x22:\x22https:\/\/landing.google.com\/advancedprotection\/\x22,\x2213\x22:\x22VN\x22\x7d'; if (window['onNavigationAppInfoAvailableCallbacks']) { for (i = 0; i < window['onNavigationAppInfoAvailableCallbacks'].length; i++) { window['onNavigationAppInfoAvailableCallbacks'][i](); } delete window['onNavigationAppInfoAvailableCallbacks']; }</script>
-    <script nonce="">var navigationUiClientFlags = { 'enableChatBot': 'false', 'enableCancelingChat': 'true', };</script>
-    <navigation-root id="dart-1767526478608"></navigation-root>
+    <!-- Scripts navigation đã bị xóa để tránh xóa nội dung -->
+    <!-- navigation-root element đã bị xóa -->
+    
+    <script>
+        // JavaScript cho checkbox và continue button
+        (function() {
+            function initRadioIcons() {
+                const radioButtons = document.querySelectorAll('material-radio, .opt-in-radio, .opt-out-radio');
+                radioButtons.forEach(function(radio) {
+                    let iconContainer = radio.querySelector('.icon-container');
+                    if (!iconContainer) {
+                        const materialIcon = radio.querySelector('material-icon');
+                        if (materialIcon) {
+                            iconContainer = materialIcon.closest('.icon-container') || materialIcon.parentElement;
+                        }
+                    }
+                    if (iconContainer) {
+                        const icon = iconContainer.querySelector('i.material-icon-i, material-icon i');
+                        if (icon) {
+                            const isChecked = radio.getAttribute('aria-checked') === 'true' || 
+                                             iconContainer.classList.contains('checked');
+                            updateIcon(icon, isChecked);
+                            
+                            radio.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                
+                                const radioGroup = radio.closest('material-radio-group');
+                                if (radioGroup) {
+                                    const siblings = radioGroup.querySelectorAll('material-radio');
+                                    siblings.forEach(function(sibling) {
+                                        sibling.setAttribute('aria-checked', 'false');
+                                        const siblingIconContainer = sibling.querySelector('.icon-container');
+                                        if (siblingIconContainer) {
+                                            siblingIconContainer.classList.remove('checked');
+                                            const siblingIcon = siblingIconContainer.querySelector('i.material-icon-i, material-icon i');
+                                            if (siblingIcon) {
+                                                updateIcon(siblingIcon, false);
+                                            }
+                                        }
+                                    });
+                                }
+                                
+                                radio.setAttribute('aria-checked', 'true');
+                                iconContainer.classList.add('checked');
+                                updateIcon(icon, true);
+                                
+                                updateContinueButton();
+                            });
+                        }
+                    }
+                });
+            }
+            
+            function updateIcon(icon, checked) {
+                if (checked) {
+                    icon.textContent = 'radio_button_checked';
+                } else {
+                    icon.textContent = 'radio_button_unchecked';
+                }
+            }
+            
+            function initCheckboxes() {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(function(checkbox) {
+                    checkbox.addEventListener('change', function(e) {
+                        updateContinueButton();
+                    });
+                });
+            }
+            
+            function initContinueButton() {
+                const allButtons = document.querySelectorAll('material-button, button, [role="button"], [class*="continue" i]');
+                allButtons.forEach(function(btn) {
+                    const btnText = (btn.textContent || btn.innerText || '').trim().toLowerCase();
+                    if (btnText.includes('continue') || btnText.includes('next') || btnText.includes('submit')) {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('Continue button clicked');
+                        });
+                    }
+                });
+            }
+            
+            function updateContinueButton() {
+                const allButtons = document.querySelectorAll('material-button, button, [role="button"]');
+                allButtons.forEach(function(btn) {
+                    const btnText = (btn.textContent || btn.innerText || '').trim().toLowerCase();
+                    if (btnText.includes('continue') || btnText.includes('next')) {
+                        const requiredRadios = document.querySelectorAll('material-radio, .opt-in-radio, .opt-out-radio');
+                        let hasSelection = false;
+                        requiredRadios.forEach(function(radio) {
+                            if (radio.getAttribute('aria-checked') === 'true') {
+                                hasSelection = true;
+                            }
+                        });
+                        btn.disabled = !hasSelection;
+                        btn.setAttribute('aria-disabled', !hasSelection);
+                    }
+                });
+            }
+            
+            function init() {
+                initRadioIcons();
+                initCheckboxes();
+                initContinueButton();
+                updateContinueButton();
+                
+                setTimeout(function() {
+                    initRadioIcons();
+                    updateContinueButton();
+                }, 500);
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+            
+            const observer = new MutationObserver(function(mutations) {
+                initRadioIcons();
+                updateContinueButton();
+            });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        })();
+    </script>
 </body>
 </html>
